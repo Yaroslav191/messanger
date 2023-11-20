@@ -1,6 +1,8 @@
+import Header from "@/component/Header";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Providers } from "@/component/Providers";
 
 export const metadata: Metadata = {
    title: "Messanger",
@@ -14,7 +16,12 @@ export default function RootLayout({
 }) {
    return (
       <html lang="en">
-         <body className="bg-[#F5F6F8">{children}</body>
+         <body className="max-w-screen-xl mx-auto px-4 overflow-x-hidden">
+            <Providers>
+               <Header />
+               {children}
+            </Providers>
+         </body>
       </html>
    );
 }
