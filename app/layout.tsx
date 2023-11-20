@@ -1,8 +1,8 @@
-import Header from "@/component/Header";
 import "./globals.css";
+import Header from "@/components/Header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Providers } from "@/component/Providers";
+import { Providers } from "@/utils/Providers";
 
 export const metadata: Metadata = {
    title: "Messanger",
