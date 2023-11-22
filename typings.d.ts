@@ -1,23 +1,8 @@
-interface Board {
-  columns: Map<TypedColumn, Column>;
-}
-
-type TypedColumn = 'todo' | 'inprogress' | 'done';
-
-interface Column {
-  id: TypedColumn;
-  todos: Todo[];
-}
-
-interface Todo extends Models.Document {
-  $id: string;
-  $createdAt: string;
-  title: string;
-  status: TypedColumn;
-  image?: Image;
-}
-
-interface Image {
-  bucketId: string;
-  fieldId: string;
-}
+type newMessage = {
+  id: string;
+  message: string,
+  created_at: number;
+  userame: string;
+  profileImage: string;
+  email: string;
+};

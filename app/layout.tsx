@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
    return (
       <html lang="en">
-         <body className="max-w-screen-xl mx-auto px-4 overflow-x-hidden">
+         <body className="mx-auto px-4 overflow-x-hidden">
             <Providers>
                <Header />
                {children}
