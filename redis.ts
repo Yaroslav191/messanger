@@ -1,5 +1,6 @@
 import Redis from 'ioredis'
 
-const redis = new Redis("redis://default:65e75ac4b901401897c75b280c808a2f@eu2-evolving-leopard-31728.upstash.io:31728");
+const redis = new Redis(process.env.GOOGLE_CLIENT_SECRET!);
+await redis.set('foo', 'bar');
 
 export default redis

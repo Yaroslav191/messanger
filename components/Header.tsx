@@ -7,7 +7,7 @@ import SignBtn from "./SignBtn";
 
 const Header = () => {
    const { data: session, status } = useSession();
-   console.log(session);
+ 
    return (
       <div className="flex justify-between h-[100px] items-center sticky top-0 z-50 bg-white ">
          <div>
