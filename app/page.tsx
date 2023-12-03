@@ -3,17 +3,43 @@
 import { useSession } from "next-auth/react";
 import ChatInput from "@/components/ChatInput";
 import MessageList from "@/components/MessageList";
-import { useModalStore } from "@/store/ModalStore";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { databases } from "@/appwrite";
 
 export default function Home() {
-   const { data: session } = useSession();
+  const { data: session } = useSession();
+  const [message, setMessage] = useState("");
+  const [data, setData] = useState({} as MessagesResponse);
+  const [loadMessages, setLoadMessages] = useState({} as Message);
 
-   return (
-      <main className="relative">
-         <MessageList />
-         {session && <ChatInput />}
-      </main>
-   );
+  useEffect(() => {
+    const getMessages = async () => {
+      const res = await databases.listDocuments(
+        process.env.NEXT_PUBLIC_DATABASE_ID!,
+        process.env.NEXT_PUBLIC_TODOS_COLLECTION_ID!
+      );
+
+      setData(res as MessagesResponse);
+    };
+
+    getMessages();
+  }, [loadMessages]);
+
+  return (
+    <main className="relative">
+      <MessageList
+        messages={data.documents}
+        setLoadMessages={setLoadMessages}
+      />
+      {session && (
+        <ChatInput
+          message={message}
+          setMessage={setMessage}
+          setLoadMessages={setLoadMessages}
+        />
+      )}
+    </main>
+  );
 }

@@ -1,9 +1,8 @@
 import { databases } from "@/appwrite";
+import { serverPusher } from "@/pusher";
 
 export async function POST(req: Request, res: Response) {
   const { newMessage } = await req.json();
-
-  console.log(newMessage);
 
   const message = {
     ...newMessage,
@@ -17,9 +16,7 @@ export async function POST(req: Request, res: Response) {
     { id: message.id, message: JSON.stringify(message) }
   );
 
-  console.log(JSON.stringify(message));
-
-  // await redis.hset('messages', message.id, JSON.stringify(message))
+  serverPusher.trigger("messages", "new-message", message);
 
   return Response.json({ message });
 }
