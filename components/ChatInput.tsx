@@ -1,9 +1,9 @@
-"use cleient";
+'use cleient';
 
-import { useState } from "react";
-import { v4 as uuid } from "uuid";
-import React from "react";
-import { useSession } from "next-auth/react";
+import { useState } from 'react';
+import { v4 as uuid } from 'uuid';
+import React from 'react';
+import { useSession } from 'next-auth/react';
 
 const ChatInput = ({
   message,
@@ -22,7 +22,7 @@ const ChatInput = ({
 
     const messageToSend = message;
 
-    setMessage("");
+    setMessage('');
 
     const id = uuid();
 
@@ -30,17 +30,17 @@ const ChatInput = ({
       id,
       message: messageToSend,
       created_at: Date.now(),
-      userame: "Yaroslav",
-      profileImage: session?.user?.image || "",
-      email: "yarslavv86@gmail.com",
+      userame: session?.user?.name || '',
+      profileImage: session?.user?.image || '',
+      email: session?.user?.email || '',
     };
 
     const uploadMessageToUpstash = async () => {
       try {
-        const res = await fetch("/api/addMessage", {
-          method: "POST",
+        const res = await fetch('/api/addMessage', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ newMessage }),
         });
