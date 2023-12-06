@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { clientPusher } from "@/pusher";
 import { useSession } from "next-auth/react";
@@ -8,15 +8,20 @@ import { useSession } from "next-auth/react";
 const MessageList = ({
   messages,
   setLoadMessages,
+  loadMessages,
 }: {
   messages: MessageResponse[];
   setLoadMessages: (loadMessage: Message) => void;
+  loadMessages: Message;
 }) => {
+  const bottomRef = useRef(null);
   const { data: session, status } = useSession();
 
   const isUser = session?.user;
 
   useEffect(() => {
+    // 👇️ scroll to bottom every time messages change
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     const channel = clientPusher.subscribe("messages");
 
     channel.bind("new-message", async (data: Message) => {
@@ -27,7 +32,7 @@ const MessageList = ({
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, []);
+  }, [loadMessages]);
 
   return (
     <>
@@ -85,6 +90,7 @@ const MessageList = ({
                     </p>
                   </div>
                 </div>
+                <div ref={bottomRef} />
               </li>
             );
           })}
