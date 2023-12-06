@@ -22,6 +22,11 @@ const MessageList = ({
     channel.bind("new-message", async (data: Message) => {
       setLoadMessages({} as Message);
     });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
   }, []);
 
   return (
