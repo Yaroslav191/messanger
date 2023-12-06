@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { clientPusher } from '@/pusher';
 import { useSession } from 'next-auth/react';
-import ReactTimeago from 'react-timeago';
+import TimeAgo from 'react-timeago';
 
 const MessageList = ({
   messages,
@@ -77,11 +77,7 @@ const MessageList = ({
                       className={`text-[0.65rem] italic px-2 text-gray-300 ${
                         isUser?.email === JSON.parse(item.message).email && 'text-right'
                       }`}>
-                      {
-                        <ReactTimeago
-                          date={new Date(JSON.parse(item.message).created_at).toLocaleString()}
-                        />
-                      }
+                      {<TimeAgo date={new Date(JSON.parse(item.message).created_at)} />}
                     </p>
                   </div>
                 </div>
