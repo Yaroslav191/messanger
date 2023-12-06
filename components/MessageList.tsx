@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { clientPusher } from "@/pusher";
 import { useSession } from "next-auth/react";
-import TimeAgo from "react-timeago";
 
 const MessageList = ({
   messages,
@@ -21,6 +20,8 @@ const MessageList = ({
   const isUser = session?.user;
 
   useEffect(() => {
+    // 👇️ scroll to bottom every time messages change
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     const channel = clientPusher.subscribe("messages");
 
     channel.bind("new-message", async (data: Message) => {
@@ -83,11 +84,9 @@ const MessageList = ({
                         isUser?.email === JSON.parse(item.message).email &&
                         "text-right"
                       }`}>
-                      {
-                        <TimeAgo
-                          date={new Date(JSON.parse(item.message).created_at)}
-                        />
-                      }
+                      {new Date(
+                        JSON.parse(item.message).created_at
+                      ).toLocaleString()}
                     </p>
                   </div>
                 </div>
