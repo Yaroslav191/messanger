@@ -1,4 +1,4 @@
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function SignBtn() {
   const { data: session } = useSession();
@@ -16,9 +16,7 @@ export default function SignBtn() {
   return (
     <>
       <button
-        onClick={() =>
-          signIn('google', { callbackUrl: 'http://localhost:3000/dashboard' }, { prompt: 'login' })
-        }
+        onClick={() => signIn("google", { prompt: "login" })}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         Sign in
       </button>
