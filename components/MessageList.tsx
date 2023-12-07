@@ -16,12 +16,16 @@ const MessageList = ({
 }) => {
   const bottomRef = useRef(null);
   const { data: session, status } = useSession();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
 
   const isUser = session?.user;
 
   useEffect(() => {
-    // 👇️ scroll to bottom every time messages change
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
     const channel = clientPusher.subscribe("messages");
 
     channel.bind("new-message", async (data: Message) => {
@@ -32,7 +36,13 @@ const MessageList = ({
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, [loadMessages]);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 1000);
+  }, []);
 
   return (
     <>
