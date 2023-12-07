@@ -41,6 +41,7 @@ const MessageList = ({
   useEffect(() => {
     setTimeout(() => {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      console.log("scroll");
     }, 2000);
   }, []);
 
