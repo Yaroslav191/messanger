@@ -16,8 +16,6 @@ const MessageList = ({
 }) => {
   const bottomRef = useRef(null);
   const { data: session, status } = useSession();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isPageLoaded, setIsPageLoaded] = useState(false);
 
   const isUser = session?.user;
 
