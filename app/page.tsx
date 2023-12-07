@@ -7,12 +7,14 @@ import MessageList from "@/components/MessageList";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { databases } from "@/appwrite";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { data: session } = useSession();
   const [message, setMessage] = useState("");
   const [data, setData] = useState({} as MessagesResponse);
   const [loadMessages, setLoadMessages] = useState({} as Message);
+  const router = useRouter();
 
   useEffect(() => {
     const getMessages = async () => {
@@ -27,9 +29,14 @@ export default function Home() {
     getMessages();
   }, [loadMessages]);
 
+  useEffect(() => {
+    if (!session) router.push("/authorization");
+    else router.push("/");
+  }, [session]);
+
   return (
     <main>
-      {session ? (
+      {session && (
         <>
           <MessageList
             messages={data.documents}
@@ -42,20 +49,6 @@ export default function Home() {
             setMessage={setMessage}
             setLoadMessages={setLoadMessages}
           />
-        </>
-      ) : (
-        <>
-          <div className="h-[70vh] w-full flex justify-center items-center  flex-col">
-            <div className="mb-10 text-[#0766de] text-2xl">
-              Welcome to the message app
-            </div>
-            <Image
-              src="https://links.papareact.com/jne"
-              width={150}
-              height={50}
-              alt="Avatar image"
-            />
-          </div>
         </>
       )}
     </main>
