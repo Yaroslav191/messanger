@@ -99,7 +99,6 @@ const MessageList = ({
                   </div>
                 </div>
                 <div ref={bottomRef} />
-                <div>test</div>
               </li>
             );
           })}
