@@ -22,26 +22,23 @@ const MessageList = ({
   const isUser = session?.user;
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
-
-  useEffect(() => {
     const channel = clientPusher.subscribe("messages");
 
     channel.bind("new-message", async (data: Message) => {
       setLoadMessages({} as Message);
     });
 
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+
     return () => {
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, []);
+  }, [loadMessages]);
 
   useEffect(() => {
     setTimeout(() => {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-      console.log("scroll");
     }, 2000);
   }, []);
 
