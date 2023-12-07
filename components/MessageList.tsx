@@ -26,6 +26,7 @@ const MessageList = ({
       setLoadMessages({} as Message);
     });
 
+    // @ts-ignore
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
 
     return () => {
@@ -36,6 +37,7 @@ const MessageList = ({
 
   useEffect(() => {
     setTimeout(() => {
+      // @ts-ignore
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 2000);
   }, []);
